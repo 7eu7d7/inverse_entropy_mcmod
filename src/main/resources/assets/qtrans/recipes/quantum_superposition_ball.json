@@ -1,0 +1,14 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:quantum_superposition_ball" },
+  "pattern": [
+    " B ",
+    "BAB",
+    " B "
+  ],
+  "key": {
+    "A": { "item": "qtrans:quantum_core" },
+    "B": { "item": "qtrans:magnetic_constraint_ball" }
+  }
+}

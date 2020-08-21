@@ -1,0 +1,15 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:focusing_energy_pyramid" },
+  "pattern": [
+    "BBB",
+    "BAB",
+    "CCC"
+  ],
+  "key": {
+    "A": { "item": "qtrans:hse_ball" },
+    "B": { "type": "forge:ore_dict", "ore": "blockGold" },
+    "C": { "item": "qtrans:dark_matter_conductor" }
+  }
+}

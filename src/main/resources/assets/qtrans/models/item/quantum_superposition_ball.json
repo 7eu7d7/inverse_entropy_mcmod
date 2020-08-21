@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "qtrans:items/quantum_superposition_ball"
+    }
+}

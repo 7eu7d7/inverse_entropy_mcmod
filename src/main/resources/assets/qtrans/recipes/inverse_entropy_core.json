@@ -1,0 +1,15 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:inverse_entropy_core" },
+  "pattern": [
+    "CBC",
+    "BAB",
+    "CBC"
+  ],
+  "key": {
+    "A": { "item": "qtrans:magnetic_constraint_ball" },
+    "B": { "item": "qtrans:dark_matter_conductor" },
+    "C": { "type": "forge:ore_dict", "ore": "timeCrystal" }
+  }
+}

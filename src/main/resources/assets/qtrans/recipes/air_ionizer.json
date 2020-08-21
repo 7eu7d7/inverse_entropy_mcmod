@@ -1,0 +1,16 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:air_ionizer" },
+  "pattern": [
+    " B ",
+    "CAC",
+    "DDD"
+  ],
+  "key": {
+    "A": { "item": "qtrans:inverse_entropy_core" },
+    "B": { "item": "qtrans:focusing_energy_pyramid" },
+    "C": { "type": "forge:ore_dict", "ore": "paneGlass" },
+    "D": { "item": "qtrans:vacuum_generator" }
+  }
+}

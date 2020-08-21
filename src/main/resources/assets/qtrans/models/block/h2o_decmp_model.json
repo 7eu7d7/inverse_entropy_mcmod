@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/h2o_decmp",
+        "down": "qtrans:blocks/h2o_decmp",
+        "up": "qtrans:blocks/h2o_decmp",
+        "north": "qtrans:blocks/h2o_decmp",
+        "south": "qtrans:blocks/h2o_decmp",
+        "west": "qtrans:blocks/h2o_decmp",
+        "east": "qtrans:blocks/h2o_decmp"
+    }
+}

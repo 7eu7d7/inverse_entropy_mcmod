@@ -1,0 +1,14 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:magnetic_amplifier" },
+  "pattern": [
+    " B ",
+    "BAB",
+    " B "
+  ],
+  "key": {
+    "B": { "type": "forge:ore_dict", "ore": "ingotCopper" },
+    "A": { "type": "forge:ore_dict", "ore": "ingotNeodymiumMagnetic" }
+  }
+}

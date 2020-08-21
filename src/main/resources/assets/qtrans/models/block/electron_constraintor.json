@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/electron_constraintor_side",
+        "down": "qtrans:blocks/electron_constraintor_side",
+        "up": "qtrans:blocks/electron_constraintor_top",
+        "north": "qtrans:blocks/electron_constraintor_side",
+        "south": "qtrans:blocks/electron_constraintor_side",
+        "west": "qtrans:blocks/electron_constraintor_side",
+        "east": "qtrans:blocks/electron_constraintor_side"
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:tiny_wormhole" },
+  "pattern": [
+    " B ",
+    "BAB",
+    " B "
+  ],
+  "key": {
+    "A": { "item": "qtrans:inverse_entropy_core" },
+    "B": { "type": "forge:ore_dict", "ore": "timeCrystal" }
+  }
+}

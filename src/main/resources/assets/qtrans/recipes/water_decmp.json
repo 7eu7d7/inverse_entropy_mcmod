@@ -1,0 +1,16 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:h2o_decmp" },
+  "pattern": [
+    "ABA",
+    "DCD",
+    "ABA"
+  ],
+  "key": {
+      "A": { "type": "forge:ore_dict", "ore": "plateSteel" },
+      "B": { "type": "forge:ore_dict", "ore": "glowstone" },
+      "C": { "type": "forge:ore_dict", "ore": "blockDiamond" },
+      "D": { "type": "forge:ore_dict", "ore": "gemEnderEye" }
+  }
+}

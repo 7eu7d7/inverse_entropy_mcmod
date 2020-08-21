@@ -1,0 +1,15 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:electron_constraintor" },
+  "pattern": [
+    "B B",
+    "BAB",
+    "CCC"
+  ],
+  "key": {
+    "A": { "item": "qtrans:inverse_entropy_core" },
+    "B": { "item": "qtrans:magnetic_amplifier" },
+    "C": { "type": "forge:ore_dict", "ore": "ingotNeodymiumMagnetic" }
+  }
+}

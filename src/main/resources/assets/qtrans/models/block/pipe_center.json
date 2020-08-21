@@ -1,0 +1,21 @@
+{
+  "parent": "block/block",
+  "ambientocclusion": true,
+  "textures": {
+    "particle": "#pipe"
+  },
+  "elements": [
+    {
+      "from": [ 4, 4, 4 ],
+      "to": [ 12, 12, 12 ],
+      "faces": {
+        "down": { "texture": "#pipe_down" },
+        "up": { "texture": "#pipe_up" },
+        "north": { "texture": "#pipe_north" },
+        "south": { "texture": "#pipe_south" },
+        "west": { "texture": "#pipe_west" },
+        "east": { "texture": "#pipe_east" }
+      }
+    }
+  ]
+}

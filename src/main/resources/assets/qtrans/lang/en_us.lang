@@ -1,0 +1,20 @@
+
+tile.h2o_decmp.name=water decomposer
+tile.quantum_pipe.name=quantum pipe
+tile.wave_stabilizer.name=quantum wave stabilizer
+tile.quantum_interface.name=quantization interface
+tile.quantum_buffer.name=quantization buffer
+tile.auto_crafter.name=quantum crafter
+tile.air_ionizer.name=air ionizer
+tile.electron_constraintor.name=Strong magnetic electron bonder
+tile.energy_converter.name=energy converter
+
+
+gui.wave_stb.bu_request=take
+gui.craft_plugin.order=order
+gui.craft_plugin.disorder=disorder
+gui.craft_plugin.res_fluid=fluid craft
+gui.craft_plugin.res_item=item craft
+gui.ext_plug.bu_setname=set name
+
+itemGroup.QuantumTransfer.name=Inverse entropy

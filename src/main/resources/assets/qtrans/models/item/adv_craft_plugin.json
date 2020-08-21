@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "qtrans:items/adv_craft_plugin"
+    }
+}

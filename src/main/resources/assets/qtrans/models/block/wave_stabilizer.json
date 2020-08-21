@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/wave_stabilizer",
+        "down": "qtrans:blocks/wave_stabilizer",
+        "up": "qtrans:blocks/wave_stabilizer",
+        "north": "qtrans:blocks/wave_stabilizer",
+        "south": "qtrans:blocks/wave_stabilizer",
+        "west": "qtrans:blocks/wave_stabilizer",
+        "east": "qtrans:blocks/wave_stabilizer"
+    }
+}

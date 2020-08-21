@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/quantum_buffer",
+        "down": "qtrans:blocks/quantum_buffer",
+        "up": "qtrans:blocks/quantum_buffer",
+        "north": "qtrans:blocks/quantum_buffer",
+        "south": "qtrans:blocks/quantum_buffer",
+        "west": "qtrans:blocks/quantum_buffer",
+        "east": "qtrans:blocks/quantum_buffer"
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:vacuum_generator" },
+  "pattern": [
+    "BBB",
+    "CAC",
+    "BBB"
+  ],
+  "key": {
+    "A": { "item": "qtrans:magnetic_constraint_ball" },
+    "B": { "type": "forge:ore_dict", "ore": "darkMatter" },
+    "C": { "item": "qtrans:ht_super_conductor" }
+  }
+}

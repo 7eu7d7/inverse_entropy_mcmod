@@ -1,0 +1,5 @@
+{
+  "recipes": {
+    "fe_eng_upgrade": "com.qtransfer.mod7e.recipe.ConvertUpgradRecipe$Factory"
+  }
+}

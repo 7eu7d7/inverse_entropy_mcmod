@@ -1,0 +1,15 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:energy_converter" },
+  "pattern": [
+    "CBC",
+    "BAB",
+    "CBC"
+  ],
+  "key": {
+    "A": { "item": "qtrans:tiny_wormhole" },
+    "B": { "type": "forge:ore_dict", "ore": "ingotNeodymiumMagnetic" },
+    "C": { "item": "qtrans:dark_matter_conductor" }
+  }
+}

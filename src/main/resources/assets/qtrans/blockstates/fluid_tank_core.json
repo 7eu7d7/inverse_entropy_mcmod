@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": {
+            "model": "qtrans:fluid_tank"
+        },
+        "facing": {
+            "north": { "y": 0 },
+            "south": { "y": 180 },
+            "west": { "y": 270 },
+            "east": { "y": 90 }
+        }
+    }
+}

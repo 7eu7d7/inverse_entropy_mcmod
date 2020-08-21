@@ -1,0 +1,16 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:magnetic_constraint_ball" },
+  "pattern": [
+    "DBC",
+    "BAB",
+    "CBD"
+  ],
+  "key": {
+    "A": { "type": "forge:ore_dict", "ore": "blockGlass" },
+    "B": { "type": "forge:ore_dict", "ore": "ingotIronMagnetic" },
+    "C": { "type": "forge:ore_dict", "ore": "gemEnderEye" },
+    "D": { "type": "forge:ore_dict", "ore": "blockRedstone" }
+  }
+}

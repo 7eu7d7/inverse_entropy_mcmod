@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/block_shaper",
+        "down": "qtrans:blocks/block_shaper",
+        "up": "qtrans:blocks/block_shaper",
+        "north": "qtrans:blocks/block_shaper",
+        "south": "qtrans:blocks/block_shaper",
+        "west": "qtrans:blocks/block_shaper",
+        "east": "qtrans:blocks/block_shaper"
+    }
+}

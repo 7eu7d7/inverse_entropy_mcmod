@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/auto_crafter",
+        "down": "qtrans:blocks/auto_crafter",
+        "up": "qtrans:blocks/auto_crafter",
+        "north": "qtrans:blocks/auto_crafter",
+        "south": "qtrans:blocks/auto_crafter",
+        "west": "qtrans:blocks/auto_crafter",
+        "east": "qtrans:blocks/auto_crafter"
+    }
+}

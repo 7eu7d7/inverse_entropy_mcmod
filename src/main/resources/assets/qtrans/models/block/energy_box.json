@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/energy_box_in",
+        "down": "qtrans:blocks/energy_box_in",
+        "up": "qtrans:blocks/energy_box_in",
+        "north": "qtrans:blocks/energy_box_out",
+        "south": "qtrans:blocks/energy_box_in",
+        "west": "qtrans:blocks/energy_box_in",
+        "east": "qtrans:blocks/energy_box_in"
+    }
+}

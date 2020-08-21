@@ -1,0 +1,14 @@
+{
+  "group": "qtrans:machine",
+  "result": { "item": "qtrans:quantum_superposition_ball" },
+  "pattern": [
+    " B ",
+    "BAB",
+    " B "
+  ],
+  "type": "qtrans:fe_eng_upgrade",
+  "key": {
+    "A": { "item": "qtrans:quantum_superposition_ball" },
+    "B": { "item": "qtrans:magnetic_amplifier" }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "forge_marker": 1,
+  "ambientocclusion": true,
+  "defaults": {
+    "textures": {
+      "pipe_down": "qtrans:blocks/quantum_pipe",
+      "pipe_up": "qtrans:blocks/quantum_pipe",
+      "pipe_north": "qtrans:blocks/quantum_pipe",
+      "pipe_south": "qtrans:blocks/quantum_pipe",
+      "pipe_west": "qtrans:blocks/quantum_pipe",
+      "pipe_east": "qtrans:blocks/quantum_pipe",
+      "pipe": "qtrans:blocks/quantum_pipe",
+      "empty": "qtrans:blocks/empty"
+    },
+    "model": "qtrans:pipe_center",
+    "uvlock": true
+  },
+  "variants": {
+    "": { "model": "qtrans:pipe_center" },
+    "down": {
+      "true": {
+        "textures": {
+          "pipe_down": "qtrans:blocks/empty"
+        },
+        "submodel": {
+          "pipe_down": {
+            "model": "qtrans:pipe_part",
+            "x": 90,
+            "uvlock": true
+          }
+        }
+      },
+      "false": { }
+    },
+    "up": {
+      "true": {
+        "textures": {
+          "pipe_up": "qtrans:blocks/empty"
+        },
+        "submodel": {
+          "pipe_up": {
+            "model": "qtrans:pipe_part",
+            "x": -90,
+            "uvlock": true
+          }
+        }
+      },
+      "false": { }
+    },
+    "north": {
+      "true": {
+        "textures": {
+          "pipe_north": "qtrans:blocks/empty"
+        },
+        "submodel": {
+          "pipe_north": {
+            "model": "qtrans:pipe_part",
+            "uvlock": true
+          }
+        }
+      },
+      "false": { }
+    },
+    "south": {
+      "true": {
+        "textures": {
+          "pipe_south": "qtrans:blocks/empty"
+        },
+        "submodel": {
+          "pipe_south": {
+            "model": "qtrans:pipe_part",
+            "y": 180,
+            "uvlock": true
+          }
+        }
+      },
+      "false": { }
+    },
+    "east": {
+      "true": {
+        "textures": {
+          "pipe_east": "qtrans:blocks/empty"
+        },
+        "submodel": {
+          "pipe_east": {
+            "model": "qtrans:pipe_part",
+            "y": 90,
+            "uvlock": true
+          }
+        }
+      },
+      "false": { }
+    },
+    "west": {
+      "true": {
+        "textures": {
+          "pipe_west": "qtrans:blocks/empty"
+        },
+        "submodel": {
+          "pipe_west": {
+            "model": "qtrans:pipe_part",
+            "y": -90,
+            "uvlock": true
+          }
+        }
+      },
+      "false": { }
+    },
+    "inventory": [
+      {
+        "textures": {
+          "empty": "qtrans:blocks/quantum_pipe"
+        },
+        "submodel": {
+          "pipe_north": {
+            "model": "qtrans:pipe_part",
+            "uvlock": true
+          },
+          "pipe_south": {
+            "model": "qtrans:pipe_part",
+            "y": 180,
+            "uvlock": true
+          }
+        }
+      }
+    ]
+  }
+}
