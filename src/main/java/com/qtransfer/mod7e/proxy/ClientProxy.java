@@ -8,6 +8,7 @@ import com.qtransfer.mod7e.entity.QRobotEntity;
 import com.qtransfer.mod7e.entity.QRobotRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -63,6 +64,7 @@ public class ClientProxy extends CommonProxy
 	public void loadModel(ModelRegistryEvent event) {
 
 		OBJLoader.INSTANCE.addDomain(Constant.MODID);
+		OBJLoader.INSTANCE.onResourceManagerReload(Minecraft.getMinecraft().getResourceManager());
 
         StateMapperBase ignoreState = new StateMapperBase() {
             @Override
