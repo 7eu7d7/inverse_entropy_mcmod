@@ -33,6 +33,12 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+
 public class ClientProxy extends CommonProxy
 {
 	@Override
@@ -59,6 +65,36 @@ public class ClientProxy extends CommonProxy
     {
         event.getMap().registerSprite(Constant.TEXTURE_LIGHTING);
     }*/
+
+    @SubscribeEvent
+    public void stitchEventPre(TextureStitchEvent.Pre event) {
+        //load obj model textures
+        try {
+            System.out.println("stitch");
+            for(String file:Utils.getResourceListing("models/entity", ".mtl")){
+                System.out.println("sname:"+file);
+                file=Constant.item(file.substring(file.indexOf("models")));
+                System.out.println(file);
+                InputStream ins = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(file)).getInputStream();
+                BufferedReader bf = new BufferedReader(new InputStreamReader(ins));
+                String str;
+                // 按行读取字符串
+                while ((str = bf.readLine()) != null) {
+
+                    if(str.startsWith("map_Kd")){
+                        System.out.println("ftex:"+str);
+                        event.getMap().registerSprite(new ResourceLocation(str.substring(7).trim()));
+                    }
+                }
+                bf.close();
+                ins.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
 	@SubscribeEvent
 	public void loadModel(ModelRegistryEvent event) {

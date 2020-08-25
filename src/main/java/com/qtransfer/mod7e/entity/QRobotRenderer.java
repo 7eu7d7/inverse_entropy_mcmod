@@ -23,6 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.client.model.IModel;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.client.model.obj.OBJModel;
@@ -36,41 +37,21 @@ import java.util.*;
 import java.util.function.Function;
 
 public class QRobotRenderer extends Render<QRobotEntity> {
-    public static final ResourceLocation ROBOT_TEX=new ResourceLocation(Constant.item("textures/entity/qrobot.png"));
-    public static final ResourceLocation ROBOT_TEX1=new ResourceLocation(Constant.item("textures/entity/mask02.png"));
-    public final ResourceLocation RES_MODEL=new ResourceLocation(Constant.MODID, "models/entity/qrobot.obj");
-    //public final ResourceLocation RES_MODEL=new ResourceLocation(Constant.MODID, "entity/qrobot.obj");
+    public static final ResourceLocation ROBOT_TEX1=new ResourceLocation(Constant.item("textures/entity/eye_smile.png"));
+    public final ResourceLocation RES_MODEL=new ResourceLocation(Constant.MODID, "entity/qrobot_opt2.obj");
     IBakedModel bakedModel;
 
-    List<ResourceLocation> textures=new ArrayList<ResourceLocation>();
-    List<Integer> face_count=new ArrayList<Integer>();
 
     public QRobotRenderer(RenderManager manager) {
         super(manager);
-        //bulidModel();
-        //bindTexture(ROBOT_TEX1);
     }
 
     public void bulidModel(){
         if (bakedModel == null) {
 
             try {
-                OBJModel model = (OBJModel) OBJLoader.INSTANCE.loadModel(RES_MODEL);
-                int count=0;
-                for(OBJModel.Group g:model.getMatLib().getGroups().values()){
-                    face_count.add(count+=g.getFaces().size());
-                    LinkedHashSet<OBJModel.Face> g_faces=g.getFaces();
-                    if(g_faces.size()>0) {
-                        String mat_name = g_faces.iterator().next().getMaterialName();
-                        String tex_name = model.getMatLib().getMaterial(mat_name).getTexture().getPath();
-                        System.out.println("rob tex:" + mat_name + "," + tex_name);
-
-                        textures.add(new ResourceLocation(tex_name));
-                    } else {
-                        textures.add(new ResourceLocation(OBJModel.Texture.WHITE.getPath()));
-                    }
-                }
-                bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.ITEM, new DefaultTextureGetter());
+                IModel model = ModelLoaderRegistry.getModelOrLogError(RES_MODEL, "qtrans is missing a model. Please report this to the mod authors.");
+                bakedModel = model.bake(model.getDefaultState(), DefaultVertexFormats.ITEM, new DefaultTextureGetter());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -87,39 +68,7 @@ public class QRobotRenderer extends Render<QRobotEntity> {
 
             TextureAtlasSprite tas=Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
             System.out.println(tas);
-            /*try {
-                debug(Minecraft.getMinecraft().getTextureMapBlocks());
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }*/
             return tas;
-        }
-
-        public void debug(TextureMap textureMap) throws NoSuchFieldException, IllegalAccessException {
-            Class<?> clazz = textureMap.getClass();
-
-            System.out.println("field_110574_e");
-            Field f1 = clazz.getDeclaredField("field_110574_e");
-            f1.setAccessible(true);
-            Map<String, TextureAtlasSprite> m1=(Map) f1.get(textureMap);
-
-            for(String s:m1.keySet()){
-                if(s.startsWith("qtrans"))
-                    System.out.println(s);
-            }
-
-            System.out.println("field_94252_e");
-            Field f2 = clazz.getDeclaredField("field_94252_e");
-            f2.setAccessible(true);
-            Map<String, TextureAtlasSprite> m2=(Map) f2.get(textureMap);
-
-            for(String s:m2.keySet()){
-                if(s.startsWith("qtrans"))
-                    System.out.println(s);
-            }
-
         }
     }
 
@@ -133,13 +82,25 @@ public class QRobotRenderer extends Render<QRobotEntity> {
         //System.out.println(entity.getPosition());
         //System.out.println(x+","+y+","+z);
 
-        bindEntityTexture(entity);
+
         //bindTexture(ROBOT_TEX1);
         bulidModel();
 
         /*Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer()
                 .renderModelBrightnessColor(bakedModel, 1.0F, 1.0F, 1.0F, 1.0F);*/
+        bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         renderModelBrightnessColorQuads(1.0F, 1.0F, 1.0F, 1.0F, bakedModel.getQuads(null,null, 0L));
+
+        /*bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+        buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+        buffer.pos(0, 0, 0).color(0xFF, 0xFF, 0xFF, 0xFF).tex(0, 0).lightmap(240, 0).endVertex();
+        buffer.pos(0, 10, 0).color(0xFF, 0xFF, 0xFF, 0xFF).tex(0, 1).lightmap(240, 0).endVertex();
+        buffer.pos(10, 10, 0).color(0xFF, 0xFF, 0xFF, 0xFF).tex(1, 1).lightmap(240, 0).endVertex();
+        buffer.pos(10, 0, 0).color(0xFF, 0xFF, 0xFF, 0xFF).tex(1, 0).lightmap(240, 0).endVertex();
+        tessellator.draw();*/
+
 
         GlStateManager.popMatrix();
         GlStateManager.popAttrib();
@@ -153,22 +114,12 @@ public class QRobotRenderer extends Render<QRobotEntity> {
         int i = 0;
 
         //System.out.println("qsize:"+listQuads.size());
-        int p_tex=0;
 
-        //bindTexture(textures.get(p_tex));
+        bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
         for (int j = listQuads.size(); i < j; ++i)
         {
             BakedQuad bakedquad = listQuads.get(i);
 
-            while(i>=face_count.get(p_tex)) {
-                p_tex++;
-                bindTexture(textures.get(p_tex));
-            }
-            //bindTexture(new ResourceLocation()bakedquad.getSprite().getIconName());
-
-            //System.out.println("rander:"+bakedquad.getSprite().getIconName());
-
-            bufferbuilder.begin(7, DefaultVertexFormats.ITEM);
             bufferbuilder.addVertexData(bakedquad.getVertexData());
 
             if (bakedquad.hasTintIndex())
@@ -182,8 +133,8 @@ public class QRobotRenderer extends Render<QRobotEntity> {
 
             Vec3i vec3i = bakedquad.getFace().getDirectionVec();
             bufferbuilder.putNormal((float)vec3i.getX(), (float)vec3i.getY(), (float)vec3i.getZ());
-            tessellator.draw();
         }
+        tessellator.draw();
     }
 
     @Nullable
@@ -191,8 +142,7 @@ public class QRobotRenderer extends Render<QRobotEntity> {
     protected ResourceLocation getEntityTexture(QRobotEntity entity) {
         /*TextureAtlasSprite tas=Minecraft.getMinecraft().getTextureMapBlocks().registerSprite(ROBOT_TEX1);
         System.out.println("load textures");*/
-        return ROBOT_TEX1;
-        //return TextureMap.LOCATION_BLOCKS_TEXTURE;
+        return TextureMap.LOCATION_BLOCKS_TEXTURE;
     }
 
 }

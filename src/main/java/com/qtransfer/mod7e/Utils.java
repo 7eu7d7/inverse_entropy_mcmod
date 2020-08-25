@@ -22,7 +22,18 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nonnull;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.file.FileSystems;
+import java.nio.file.FileSystem;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class Utils {
 
@@ -50,6 +61,37 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<String> getResourceListing(String spath) throws URISyntaxException, IOException {
+        URI uri = Utils.class.getClassLoader().getResource("assets/qtrans/"+spath).toURI();
+        Map<String, String> env = new HashMap<>();
+        List<String> flist=new ArrayList<String>();
+        try (FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
+            for (Path path : zipfs.getRootDirectories()) {
+                Files.list(path.resolve("assets/qtrans/"+spath))
+                        .forEach(p -> flist.add(p.toString()));
+            }
+        }
+        System.out.println("flen:"+flist.size());
+        return flist;
+    }
+
+    public static List<String> getResourceListing(String spath, String ends) throws URISyntaxException, IOException {
+        URI uri = Utils.class.getClassLoader().getResource("assets/qtrans/"+spath).toURI();
+        Map<String, String> env = new HashMap<>();
+        List<String> flist=new ArrayList<String>();
+        try (FileSystem zipfs = FileSystems.newFileSystem(uri, env)) {
+            for (Path path : zipfs.getRootDirectories()) {
+                Files.list(path.resolve("assets/qtrans/"+spath))
+                        .forEach(p -> {
+                            if(p.toString().endsWith(ends))
+                                flist.add(p.toString());
+                        });
+            }
+        }
+        System.out.println("flen:"+flist.size());
+        return flist;
     }
 
     public static String readStr(InputStream is) throws IOException {
