@@ -9,14 +9,27 @@ import net.minecraftforge.items.ItemStackHandler;
 public class BlockShaperEntity extends QTransTileEntity implements ITickable{
     public ItemStackHandler inventory_chip = new ItemStackHandler(1);
     public SingleChipItem chip;
+    public boolean start_run=true;
+
+    Runnable task=new Runnable(){
+        @Override
+        public void run() {
+            if (chip != null) {
+                chip.script.callFunction("main",new BlockShaperPython(BlockShaperEntity.this));
+            }
+        }
+    };
+    Thread task_run;
+
 
     @Override
     public void update() {
         if(world.isRemote)
             return;
 
-        if (chip != null) {
-            chip.script.callFunction("tick",new BlockShaperPython(this));
+        if (start_run && task_run == null) {
+            task_run=new Thread(task);
+            task_run.start();
         }
     }
 

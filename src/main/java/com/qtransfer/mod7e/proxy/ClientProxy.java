@@ -1,24 +1,20 @@
 package com.qtransfer.mod7e.proxy;
 
 import com.qtransfer.mod7e.*;
-import com.qtransfer.mod7e.blocks.BlockFluidTankEntity;
 import com.qtransfer.mod7e.blocks.energy.AirIonizerEntity;
 import com.qtransfer.mod7e.blocks.render.*;
 import com.qtransfer.mod7e.entity.QRobotEntity;
-import com.qtransfer.mod7e.entity.QRobotRenderer;
+import com.qtransfer.mod7e.entity.render.QRobotRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -46,6 +42,8 @@ public class ClientProxy extends CommonProxy
 	{
 		TabsList.addCreativeTab();
 		MinecraftForge.EVENT_BUS.register(this);
+        RenderingRegistry.registerEntityRenderingHandler(QRobotEntity.class, QRobotRenderer::new);
+        //RenderingRegistry.registerEntityRenderingHandler(QRobotEntity.class, RenderChicken::new);
 	}
 
 	@Override
@@ -123,7 +121,6 @@ public class ClientProxy extends CommonProxy
         ModelLoaderRegistry.registerLoader(new ModelLoaderAI());
         ModelLoaderRegistry.registerLoader(new ModelLoaderFT());
 
-        RenderingRegistry.registerEntityRenderingHandler(QRobotEntity.class, QRobotRenderer::new);
 
 		for(Item item: ItemMaker.itemlist) {
 			if(item instanceof ItemBlock && ((ItemBlock) item).getBlock() instanceof IFluidBlock){

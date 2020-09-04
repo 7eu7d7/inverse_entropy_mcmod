@@ -12,6 +12,7 @@ import com.qtransfer.mod7e.gui.GuiElementLoader;
 import com.qtransfer.mod7e.python.PythonScript;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.python.util.PythonInterpreter;
 
 import java.util.Properties;
+
+import static com.qtransfer.mod7e.Constant.MODID;
 
 public class CommonProxy
 {
@@ -120,10 +123,10 @@ public class CommonProxy
 		ItemStack heldItemStack = event.getItemStack();
 		if (heldItemStack.isEmpty()) return;
 
-        if(heldItemStack.getItem().getRegistryName().toString().equals(Constant.item("qrobot_item"))){
+        if(!event.getWorld().isRemote && heldItemStack.getItem().getRegistryName().toString().equals(Constant.item("qrobot_item"))){
             EntityLiving entityLiving = new QRobotEntity(event.getWorld());
             BlockPos pos = event.getPos();
-            entityLiving.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+            entityLiving.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
             heldItemStack.shrink(1);
             event.getWorld().spawnEntity(entityLiving);
         }
@@ -137,15 +140,13 @@ public class CommonProxy
 	}
 
     @SubscribeEvent
-    public static void onEntityRegistation(RegistryEvent.Register<EntityEntry> event) {
-        event.getRegistry().register(EntityEntryBuilder.create()
-                .entity(QRobotEntity.class)
-                .id(new ResourceLocation(Constant.MODID, "robot_entity"), 233)
-                .name("QRobotEntity")
-                .tracker(80, 2, true)
-                .build()
-        );
-        EntityRegistry.registerEgg(new ResourceLocation(Constant.MODID, "robot_entity"),0xffff66, 0x660000);
+    public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+        System.out.println("Entries registered");
+        event.getRegistry().register(EntityEntryBuilder.create().entity(QRobotEntity.class)
+                .id(new ResourceLocation(Constant.MODID, "robot_entity"), 0)
+                .name("QRobotEntity").tracker(128, 2, true)
+                .egg(0x4c3e30, 0xf0f0f).build());
+
     }
 
 	/*@SubscribeEvent
