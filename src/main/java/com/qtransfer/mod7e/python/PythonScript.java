@@ -24,7 +24,8 @@ public class PythonScript {
         PySystemState state = new PySystemState();
         state.path.append(new PyString(Utils.getJarPath()+"/assets/qtrans/pythons"));
         //state.setClassLoader(Thread.currentThread().getContextClassLoader());
-        return new PythonInterpreter(null,state);
+        PythonInterpreter pyint=new PythonInterpreter(null,state);
+        return pyint;
     }
 
     public PyFunction getFunction(String name){
@@ -34,6 +35,7 @@ public class PythonScript {
     public Object callFunction(String name,Object... objs){
         PyFunction func=null;
         try {
+            System.out.println("get_func"+getFunction(name));
             if((func=getFunction(name))!=null){
                 return func.__call__(Py.javas2pys(objs));
             }

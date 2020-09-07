@@ -7,6 +7,7 @@ import com.qtransfer.mod7e.blocks.transfer.AutoCrafterEntity;
 import com.qtransfer.mod7e.blocks.transfer.QuantumBufferEntity;
 import com.qtransfer.mod7e.blocks.transfer.QuantumInterfaceEntity;
 import com.qtransfer.mod7e.blocks.transfer.WaveStabilizerEntity;
+import com.qtransfer.mod7e.entity.FakePlayerLoader;
 import com.qtransfer.mod7e.entity.QRobotEntity;
 import com.qtransfer.mod7e.gui.GuiElementLoader;
 import com.qtransfer.mod7e.python.PythonScript;
@@ -64,6 +65,7 @@ public class CommonProxy
 
         System.out.println(Utils.getJarPath());
 	    new GuiElementLoader();
+        new FakePlayerLoader();
 	}
 
 	public void postInit(FMLPostInitializationEvent event)

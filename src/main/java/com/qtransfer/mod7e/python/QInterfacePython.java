@@ -1,12 +1,11 @@
 package com.qtransfer.mod7e.python;
 
 import com.qtransfer.mod7e.blocks.transfer.QuantumInterfaceEntity;
-import net.minecraft.tileentity.TileEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class QInterfacePython extends EntityPython{
+public class QInterfacePython extends TileEntityPython {
     QuantumInterfaceEntity interfaceEntity;
 
     public QInterfacePython(QuantumInterfaceEntity entity) {

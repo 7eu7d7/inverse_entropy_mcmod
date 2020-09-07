@@ -27,7 +27,7 @@ public class PythonSyntaxHighlighter {
             "__divmod__", "__ifloordiv__", "__iand__", "__truediv__", "__irshift__", "__complex__", "__index__",
             "__setitem__", "__eq__", "__mod__", "__neg__", "__float__", "__and__", "__lshift__", "__del__", "__pow__",
             "__str__", "__getattribute__", "__pos__", "__lt__", "__gt__", "__rshift__", "__contains__", "__add__",
-            "print", "len", "repr", "str", "bytes", "hash", "bool", "format", "dir", "divmod", "power", "abs", "complex",
+            "print","range", "len", "repr", "str", "bytes", "hash", "bool", "format", "dir", "divmod", "power", "abs", "complex",
             "int", "float", "round", "reversed"};           //魔术方法
     String[] symArray = { "=", "+", "-", "*", "/", ">", "<", "[", "]", "{", "}", "%", ",", "!", "|", "&", "^", ":" };           //符号
 

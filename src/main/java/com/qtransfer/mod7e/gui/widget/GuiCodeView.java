@@ -237,7 +237,8 @@ public class GuiCodeView extends Gui {
 
     public void updateDrawText(){
         String str=getText();
-        texts_draw=highlighter.process(str).split("\n");
+        if(str.length()>0)
+            texts_draw=highlighter.process(str).split("\n");
     }
 
     public void insertText(String text){
@@ -422,7 +423,8 @@ public class GuiCodeView extends Gui {
         text=normalize(text);
         texts.clear();
         texts.addAll(Arrays.asList(text.split("\n")));
-        updateDrawText();
+        if(text.length()>0)
+            updateDrawText();
     }
 
     public String getText(){

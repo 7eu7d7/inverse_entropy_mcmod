@@ -6,6 +6,7 @@ import com.qtransfer.mod7e.python.PythonScript;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import org.lwjgl.Sys;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
@@ -23,11 +24,11 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
 
     String folder_name=""+System.currentTimeMillis();
     ItemStack stack;
-    String folder_parent="inverse_entropy";
+    String folder_parent="./inverse_entropy";
     File folder_this=new File(folder_parent,folder_name);
 
-    boolean init_ok=false;
-    public PythonScript script=new PythonScript();
+    volatile boolean init_ok=false;
+    public volatile PythonScript script=new PythonScript();
 
     public static String file_name="main.py"; //TODO 多文件支持
 
@@ -60,6 +61,7 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
         new Thread(){
             @Override
             public void run() {
+                init_ok=false;
                 PythonInterpreter interpreter = PythonScript.createInterpreter();
                 try {
                     interpreter.execfile(new File(folder_this,file_name).toString());
@@ -88,6 +90,7 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
     public String readFromFile(String name){
         String res="";
         try {
+            System.out.print(new File(folder_this,name).getAbsolutePath());
             res= Utils.readFile(new File(folder_this,name).toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,5 +115,22 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Thread th_run;
+
+    public void runFuncThread(String name,Object... paras){
+        th_run= new Thread(() -> {
+            System.out.println("wait init");
+            while (!init_ok){}
+            System.out.println("init ok");
+            script.callFunction(name, paras);
+            System.out.println("exec ok");
+        });
+        th_run.start();
+    }
+
+    public void stopRunning(){
+        th_run.stop();
     }
 }

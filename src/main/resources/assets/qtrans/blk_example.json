@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "qtrans:blocks/<name>",
+        "down": "qtrans:blocks/<name>",
+        "up": "qtrans:blocks/<name>",
+        "north": "qtrans:blocks/<name>",
+        "south": "qtrans:blocks/<name>",
+        "west": "qtrans:blocks/<name>",
+        "east": "qtrans:blocks/<name>"
+    }
+}

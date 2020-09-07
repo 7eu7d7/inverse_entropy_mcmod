@@ -8,7 +8,6 @@ import com.qtransfer.mod7e.items.AdvanceCraftPlugin;
 import com.qtransfer.mod7e.items.CraftPluginItem;
 import com.qtransfer.mod7e.items.ExtractPluginItem;
 import com.qtransfer.mod7e.items.SingleChipItem;
-import com.qtransfer.mod7e.python.EntityPython;
 import com.qtransfer.mod7e.python.QInterfacePython;
 import com.qtransfer.mod7e.transfer.*;
 import com.qtransfer.mod7e.utils.*;
@@ -26,8 +25,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
-import org.python.core.Py;
-import org.python.core.PyFunction;
 
 import java.util.*;
 
@@ -467,7 +464,7 @@ public class QuantumInterfaceEntity extends QTransTileEntity implements IRequest
             chip.script.callFunction("obj_arrive",new QInterfacePython(this),obj);
             /*PyFunction func=null;
             if((func=chip.script.getFunction("obj_arrive"))!=null){
-                return func.__call__(Py.javas2pys(new EntityPython(this),obj));
+                return func.__call__(Py.javas2pys(new TileEntityPython(this),obj));
             }*/
         }
         return null;

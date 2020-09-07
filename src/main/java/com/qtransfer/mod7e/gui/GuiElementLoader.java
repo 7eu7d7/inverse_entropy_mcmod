@@ -29,6 +29,8 @@ public class GuiElementLoader implements IGuiHandler
     public static final int GUI_ELECTRON_CONSTRAINTOR = 21;
     public static final int GUI_ENERGY_BOX = 22;
 
+    public static final int GUI_Q_ROBOT = 101;
+
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(Constant.item("textures/gui/slot_bg.png"));
     public static final ResourceLocation TEXTURE_BG = new ResourceLocation(Constant.item("textures/gui/bg1.png"));
@@ -49,6 +51,10 @@ public class GuiElementLoader implements IGuiHandler
     public static final ResourceLocation TEXTURE_BU_ADD= new ResourceLocation(Constant.item("textures/gui/bu_add.png"));
     public static final ResourceLocation TEXTURE_BUTTON= new ResourceLocation(Constant.item("textures/gui/button.png"));
     public static final ResourceLocation TEXTURE_BU_ADD_SEND= new ResourceLocation(Constant.item("textures/gui/bu_add_send.png"));
+    public static final ResourceLocation TEXTURE_BU_START= new ResourceLocation(Constant.item("textures/gui/bu_start.png"));
+    public static final ResourceLocation TEXTURE_BU_STOP= new ResourceLocation(Constant.item("textures/gui/bu_stop.png"));
+
+    public static final ResourceLocation TEXTURE_CHIP_BG= new ResourceLocation(Constant.item("textures/gui/chip_bg.png"));
 
     public GuiElementLoader()
     {
@@ -89,6 +95,9 @@ public class GuiElementLoader implements IGuiHandler
                 return new ContainerElectronConstraintor(player, world.getTileEntity(new BlockPos(x, y, z)));
             case GUI_ENERGY_BOX:
                 return new ContainerEnergyBox(player, world.getTileEntity(new BlockPos(x, y, z)));
+
+            case GUI_Q_ROBOT:
+                return new ContainerQRobot(player, world.getEntityByID(x));
         }
         return null;
     }
@@ -127,6 +136,9 @@ public class GuiElementLoader implements IGuiHandler
                 return new GuiElectronConstraintor(new ContainerElectronConstraintor(player,world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_ENERGY_BOX:
                 return new GUIBase(new ContainerEnergyBox(player, world.getTileEntity(new BlockPos(x, y, z))));
+
+            case GUI_Q_ROBOT:
+                return new GuiQRobot(new ContainerQRobot(player, world.getEntityByID(x)));
         }
         return null;
     }

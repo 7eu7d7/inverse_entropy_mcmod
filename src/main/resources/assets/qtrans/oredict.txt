@@ -1,0 +1,8 @@
+minecraft:glass[blockGlass]
+minecraft:glass_pane[paneGlass]
+minecraft:gold_block[blockGold]
+minecraft:ender_eye[gemEnderEye]
+minecraft:redstone_block[blockRedstone]
+minecraft:glowstone[glowstone]
+minecraft:diamond_block[blockDiamond]
+minecraft:iron_ingot[ironIngot]
