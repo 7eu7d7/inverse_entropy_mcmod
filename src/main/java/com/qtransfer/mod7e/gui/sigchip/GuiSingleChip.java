@@ -1,6 +1,9 @@
-package com.qtransfer.mod7e.gui;
+package com.qtransfer.mod7e.gui.sigchip;
 
 import com.qtransfer.mod7e.Rect;
+import com.qtransfer.mod7e.gui.ContainerBase;
+import com.qtransfer.mod7e.gui.ContainerSingleChip;
+import com.qtransfer.mod7e.gui.GUIBase;
 import com.qtransfer.mod7e.gui.widget.GuiCodeView;
 import com.qtransfer.mod7e.items.SingleChipItem;
 import com.qtransfer.mod7e.proxy.BasePacket;
@@ -16,18 +19,18 @@ import org.lwjgl.input.Mouse;
 import java.awt.*;
 import java.io.IOException;
 
-public class GuiSingleChip extends GUIBase{
+public class GuiSingleChip extends GUIBase {
     //GuiMultiLineTextField tf_code;
-    GuiCodeView code_view;
+    public GuiCodeView code_view;
     ContainerSingleChip csc;
-    boolean initok=false;
+    public boolean initok=false;
 
-    public GuiSingleChip(ContainerBase inventorySlotsIn) {
+    public GuiSingleChip(ContainerBase inventorySlotsIn, String file_name) {
         super(inventorySlotsIn);
         this.xSize = 220;
         csc=(ContainerSingleChip)inventorySlotsIn;
         csc.gui_chip=this;
-
+        QNetworkManager.INSTANCE.sendPacketToServer(new BasePacket("container","select_file", file_name));
     }
 
     @Override
