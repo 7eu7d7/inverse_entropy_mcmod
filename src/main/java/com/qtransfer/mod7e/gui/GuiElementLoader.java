@@ -2,6 +2,7 @@ package com.qtransfer.mod7e.gui;
 
 import com.qtransfer.mod7e.Constant;
 import com.qtransfer.mod7e.QuantumTransfer;
+import com.qtransfer.mod7e.gui.sigchip.GuiSingleChipList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -55,6 +56,11 @@ public class GuiElementLoader implements IGuiHandler
     public static final ResourceLocation TEXTURE_BU_STOP= new ResourceLocation(Constant.item("textures/gui/bu_stop.png"));
 
     public static final ResourceLocation TEXTURE_CHIP_BG= new ResourceLocation(Constant.item("textures/gui/chip_bg.png"));
+
+    public static final ResourceLocation TEXTURE_ICON_PY= new ResourceLocation(Constant.item("textures/gui/icon_python.png"));
+    public static final ResourceLocation TEXTURE_ICON_TXT= new ResourceLocation(Constant.item("textures/gui/icon_txt.png"));
+    public static final ResourceLocation TEXTURE_ICON_IMG= new ResourceLocation(Constant.item("textures/gui/icon_img.png"));
+    public static final ResourceLocation TEXTURE_ICON_NONE= new ResourceLocation(Constant.item("textures/gui/icon_none.png"));
 
     public GuiElementLoader()
     {
@@ -129,7 +135,7 @@ public class GuiElementLoader implements IGuiHandler
             case GUI_EXTRACT_PLUGIN:
                 return new GuiExtractPlugin(new ContainerExtractPlugin(player));
             case GUI_SINGLE_CHIP:
-                return new GuiSingleChip(new ContainerSingleChip(player));
+                return new GuiSingleChipList(new ContainerSingleChip(player));
             case GUI_AIR_IONIZER:
                 return new GuiAirIonizer(new ContainerAirIonizer(player,world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_ELECTRON_CONSTRAINTOR:
@@ -142,4 +148,20 @@ public class GuiElementLoader implements IGuiHandler
         }
         return null;
     }
+
+    public static ResourceLocation getIcon(String file){
+        switch (file.substring(file.lastIndexOf(".")+1)){
+            case "py":
+                return TEXTURE_ICON_PY;
+            case "txt":
+                return TEXTURE_ICON_TXT;
+            case "jpg":
+            case "bmp":
+            case "png":
+                return TEXTURE_ICON_IMG;
+            default:
+                return TEXTURE_ICON_NONE;
+        }
+    }
+
 }

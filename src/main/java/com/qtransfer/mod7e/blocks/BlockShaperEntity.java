@@ -47,6 +47,7 @@ public class BlockShaperEntity extends QTransTileEntity implements ITickable{
     }
 
     public void resetChip(){
+        chip.stopRunning();
         chip=new SingleChipItem(inventory_chip.getStackInSlot(0));
         chip.initScript();
     }

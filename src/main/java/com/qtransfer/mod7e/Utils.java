@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -231,8 +232,8 @@ public class Utils {
         return res;
     }
 
-    public static String getJarPath() {
-        java.net.URL url = Utils.class.getProtectionDomain().getCodeSource().getLocation();
+    public static String getJarPath(Class cls) {
+        java.net.URL url = cls.getProtectionDomain().getCodeSource().getLocation();
         String filePath = null;
         try {
             filePath = java.net.URLDecoder.decode(url.getPath(), "utf-8");
@@ -241,6 +242,14 @@ public class Utils {
         }
         filePath = filePath.substring(filePath.indexOf("file:")+6,filePath.indexOf(".jar")+4);
         return filePath;
+    }
+
+    public static <T> String list2str(List<T> list){
+        StringBuilder str=new StringBuilder();
+        for(T t:list){
+            str.append(t).append(";");
+        }
+        return str.toString();
     }
 
     public static float[] color2arr(int col){

@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -161,9 +162,17 @@ public class ItemMaker {
 
             @Override
             public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-                new SingleChipItem(stack).writeNBT();
+                //new SingleChipItem(stack).writeNBT();
             }
         },"single_chip");
+
+        addItem(new Item(){
+            @Override
+            public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+                playerIn.sendMessage(new TextComponentString(String.format("location:{x:%d y:%d z:%d}", (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ)));
+                return super.onItemRightClick(worldIn, playerIn, handIn);
+            }
+        },"location_getter");
     }
 
     public static void addItem(Item item,String reg_name){

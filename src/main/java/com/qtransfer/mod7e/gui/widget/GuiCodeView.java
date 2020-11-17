@@ -15,7 +15,6 @@ import net.minecraft.util.text.TextFormatting;
 import org.apache.commons.lang3.text.StrBuilder;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.python.antlr.ast.Str;
 
 import javax.swing.*;
 import java.awt.*;

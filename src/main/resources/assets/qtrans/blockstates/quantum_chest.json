@@ -1,14 +1,9 @@
 {
     "forge_marker": 1,
     "defaults": {
-        "textures": {},
         "model": "qtrans:quantum_chest.obj"
     },
     "variants": {
-        "normal": [{}],
-        "inventory": [{
-            "transform": "forge:default-block"
-        }],
         "facing": {
             "north": { "y": 0 },
             "south": { "y": 180 },
@@ -16,6 +11,42 @@
             "east": { "y": 90 },
             "up": { "y": 270 },
             "down": { "y": 90 }
-        }
+        },
+        "inventory":
+        [
+            {
+                "transform": {
+                    "thirdperson_lefthand": {
+                        "rotation": [ { "x": 0 }, { "y": 0 }, { "z": 0 } ],
+                        "translation": [ 0, 0, 0 ],
+                        "scale": 0.75
+                    },
+                    "thirdperson_righthand": {
+                        "rotation": [ { "x": 0 }, { "y": 0 }, { "z": 0 } ],
+                        "translation": [ 0, 0, 0 ],
+                        "scale": 0.75
+                    },
+                    "gui": {
+                        "rotation": [ { "x": 20 }, { "y": -30 }, { "z": 0 } ],
+                        "translation": [ 0.0, 0.0, 0 ],
+                        "scale": 0.68
+                    },
+                    "firstperson_righthand": {
+                        "rotation": [ { "x": 0 }, { "y": -25 }, { "z": 0 } ],
+                        "translation": [ 0, 0.3, 0.1 ],
+                        "scale": 0.4
+                    },
+                    "firstperson_lefthand": {
+                        "rotation": [ { "x": 0 }, { "y": 0 }, { "z": 0 } ],
+                        "translation": [ 0, 0, 0 ],
+                        "scale": 0.5
+                    },
+                    "ground": {
+                        "rotation": [ { "x": 0 }, { "y": 0 }, { "z": 0 } ],
+                        "scale": 0.27
+                    }
+                }
+            }
+        ]
     }
 }

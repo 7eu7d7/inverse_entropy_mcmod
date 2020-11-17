@@ -30,6 +30,7 @@ public class GUIBase extends GuiContainer {
 
     ContainerBase container;
     List<GuiTextField> tflist=new ArrayList<GuiTextField>();
+    OnGuiClose ogc;
 
     public GUIBase(ContainerBase inventorySlotsIn)
     {
@@ -142,6 +143,13 @@ public class GUIBase extends GuiContainer {
 
     @Override
     protected void keyTyped(char par1, int par2) throws IOException {
+        if(par2==1){ //esc
+            if (ogc != null){
+                ogc.close();
+                return;
+            }
+        }
+
         for(GuiTextField tf:tflist) {
             if (tf.textboxKeyTyped(par1, par2)) //向文本框传入输入的内容
                 return;
@@ -154,6 +162,10 @@ public class GUIBase extends GuiContainer {
     {
         super.onGuiClosed();
         Keyboard.enableRepeatEvents(false); //关闭键盘连续输入
+    }
+
+    public void setOnGuiCloseListener(OnGuiClose ogc) {
+        this.ogc = ogc;
     }
 
     public void addTextField(GuiTextField tf){
@@ -310,5 +322,9 @@ public class GUIBase extends GuiContainer {
             GlStateManager.enableDepth();
             GlStateManager.enableBlend();
         }
+    }
+
+    public interface OnGuiClose{
+        void close();
     }
 }

@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.fluids.FluidTank;
-import org.python.antlr.ast.Str;
 
 import java.util.ArrayList;
 import java.util.Collections;

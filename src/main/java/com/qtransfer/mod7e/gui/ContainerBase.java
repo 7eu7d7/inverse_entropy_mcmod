@@ -32,6 +32,19 @@ public class ContainerBase extends Container{
         }
     }
 
+    public void removeSlotFromContainer(Slot slotIn)
+    {
+        int idx=this.inventorySlots.indexOf(slotIn);
+        this.inventorySlots.remove(idx);
+        this.inventoryItemStacks.remove(idx);
+    }
+
+    public void clearSlot()
+    {
+        this.inventorySlots.clear();
+        this.inventoryItemStacks.clear();
+    }
+
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
         if(player.world.isRemote && slotId>=0 && slotId<this.inventorySlots.size() && this.inventorySlots.get(slotId) instanceof SlotFake && this.inventorySlots.get(slotId).isEnabled()){

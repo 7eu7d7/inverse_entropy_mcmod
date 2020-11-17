@@ -1,0 +1,8 @@
+{
+    "parent": "qtrans:block/quantum_chest.obj",
+    "display":
+    {
+        "gui": { "translation": [0, 2, 0], "scale": 0.125 , "rotation": [{ "x": 300 },{ "z": 45 }] },
+        "firstperson_righthand": { "translation": [0, 2, 0], "scale": 0.125 , "rotation": [{ "x": 300 },{ "z": 45 }] }
+    }
+}

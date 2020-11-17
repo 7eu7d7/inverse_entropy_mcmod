@@ -8,12 +8,15 @@ import com.qtransfer.mod7e.entity.render.QRobotRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -29,17 +32,18 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URISyntaxException;
+import java.util.List;
 
 public class ClientProxy extends CommonProxy
 {
 	@Override
 	public void preInit(FMLPreInitializationEvent event)
 	{
+	    super.preInit(event);
+        //OBJLoader.INSTANCE.addDomain(Constant.MODID);
+        //OBJLoader.INSTANCE.onResourceManagerReload(Minecraft.getMinecraft().getResourceManager());
 		TabsList.addCreativeTab();
 		MinecraftForge.EVENT_BUS.register(this);
         RenderingRegistry.registerEntityRenderingHandler(QRobotEntity.class, QRobotRenderer::new);
@@ -57,6 +61,38 @@ public class ClientProxy extends CommonProxy
 	{
 		super.postInit(event);
 	}
+
+	public void WriteTexList(){
+        BlockRendererDispatcher ren = Minecraft.getMinecraft().getBlockRendererDispatcher();
+        try {
+            FileWriter fout=new FileWriter("./tex_list.txt");
+            for (Block block : Block.REGISTRY) {
+                String name0="";
+                for(int i=0;i<16;i++) {
+                    try {
+                        IBlockState state = block.getStateFromMeta(i);
+                        List<BakedQuad> quads=ren.getModelForState(state).getQuads(state, EnumFacing.NORTH, 0);
+                        if(!quads.isEmpty()) {
+                            String texture = quads.get(0).getSprite().toString();
+
+                            int start=texture.indexOf("name='");
+                            int end=texture.indexOf("'",start+6);
+                            String tex_name=texture.substring(start+6,end);
+                            if(tex_name.startsWith("minecraft:") && (i==0 || !name0.equals(tex_name))) {
+                                fout.append(block.getRegistryName() + "/" + i + ": " + tex_name + "\n");
+                                if(i==0) name0=tex_name;
+                            }
+                        }
+                    }catch (Exception e){
+
+                    }
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /*@SubscribeEvent
     public void onTextureStitch(TextureStitchEvent.Pre event)
@@ -97,8 +133,7 @@ public class ClientProxy extends CommonProxy
 	@SubscribeEvent
 	public void loadModel(ModelRegistryEvent event) {
 
-		OBJLoader.INSTANCE.addDomain(Constant.MODID);
-		OBJLoader.INSTANCE.onResourceManagerReload(Minecraft.getMinecraft().getResourceManager());
+        OBJLoader.INSTANCE.addDomain(Constant.MODID);
 
         StateMapperBase ignoreState = new StateMapperBase() {
             @Override

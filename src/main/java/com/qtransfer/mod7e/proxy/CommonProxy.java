@@ -11,6 +11,7 @@ import com.qtransfer.mod7e.entity.FakePlayerLoader;
 import com.qtransfer.mod7e.entity.QRobotEntity;
 import com.qtransfer.mod7e.gui.GuiElementLoader;
 import com.qtransfer.mod7e.python.PythonScript;
+import com.qtransfer.mod7e.utils.ExtClasspathLoader;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.passive.EntityChicken;
@@ -35,6 +36,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.python.util.PythonInterpreter;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 import static com.qtransfer.mod7e.Constant.MODID;
@@ -50,7 +52,6 @@ public class CommonProxy
 
 	public void init(FMLInitializationEvent event)
 	{
-
         Properties props = new Properties();
         props.put("python.console.encoding", "UTF-8");
         props.put("python.security.respectJavaAccessibility", "false");
@@ -61,9 +62,13 @@ public class CommonProxy
 
 		PythonScript.createInterpreter().execfile("./init.py");
 		//PythonScript.createInterpreter().exec(Utils.readAssets("pythons/init.py"));
-        System.out.println("init python");
 
-        System.out.println(Utils.getJarPath());
+        ArrayList<String> jars=new ArrayList<String>();
+        jars.add(Utils.getJarPath(getClass()));
+        ExtClasspathLoader.loadClasspath(jars);
+
+        System.out.println("init python");
+        System.out.println(Utils.getJarPath(getClass()));
 	    new GuiElementLoader();
         new FakePlayerLoader();
 	}

@@ -1,4 +1,4 @@
-import net.minecraft.util.EnumFacing as EnumFacing
-import net.minecraft.util.math.BlockPos as BlockPos
+from net.minecraft.util import EnumFacing
+from net.minecraft.util.math import BlockPos
 
 print('interface')

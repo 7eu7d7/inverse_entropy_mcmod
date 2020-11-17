@@ -2,7 +2,6 @@ package com.qtransfer.mod7e.python;
 
 import org.python.core.PyFloat;
 import org.python.core.PyFunction;
-import org.python.core.PyInteger;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -20,11 +19,11 @@ public class NetWork {
             public void run() {
                 try {
                     downloadFile_java(urlPath,fileSavePath,call_back);
+                    if(call_back!=null){
+                        call_back.__call__(new PyFloat(-1));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-                if(call_back!=null){
-                    call_back.__call__(new PyFloat(-1));
                 }
             }
         }.start();

@@ -6,6 +6,7 @@ import com.qtransfer.mod7e.proxy.BasePacket;
 import com.qtransfer.mod7e.proxy.QNetworkManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.resources.I18n;
 
 import java.io.IOException;
@@ -62,7 +63,13 @@ public class GuiAdvanceCP extends GuiContainerCraftPlugin{
             if(new Rect(bux,buy,8,8).inRect(mouseX,mouseY)) {
                 drawScaledCustomSizeModalRect(bux, buy, 0, 64, 32, 32, 8, 8, 32, 96);
                 if(clicked){
-                    Minecraft.getMinecraft().displayGuiScreen(new GuiACPSendName(cacp,i));
+                    GuiACPSendName sn=new GuiACPSendName(cacp,i);
+                    sn.setOnGuiCloseListener(()-> {
+                        Minecraft.getMinecraft().displayGuiScreen(new GuiAdvanceCP(cacp));
+                        //cacp.player.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_ADVCRAFT_PLUGIN, cacp.player.world, 0, 0, 0);
+                        System.out.println("closed");
+                    });
+                    Minecraft.getMinecraft().displayGuiScreen(sn);
                     //cacp.player.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_BLOCK_SHAPER, cacp.player.getEntityWorld(), cacp.pos.getX(), cacp.pos.getY(), cacp.pos.getZ());
                 }
             }else if(cacp.acp.item_send.get(i).length()>0)

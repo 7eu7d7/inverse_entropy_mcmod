@@ -6,6 +6,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.client.model.obj.OBJModel;
 
 public class ModelLoaderAI implements ICustomModelLoader{
 
@@ -20,6 +22,9 @@ public class ModelLoaderAI implements ICustomModelLoader{
 
     @Override
     public boolean accepts(ResourceLocation resourceLocation) {
+        if(resourceLocation.getResourcePath().endsWith(".obj"))
+            System.out.println("accept:"+OBJLoader.INSTANCE.accepts(resourceLocation));
+            //System.out.println("accepts:"+resourceLocation.getResourceDomain()+","+resourceLocation.getResourcePath());
         return resourceLocation.getResourceDomain().equals(Constant.MODID)
                 && resourceLocation.getResourcePath().contains(MODEL_RESOURCE_LOCATION);
     }

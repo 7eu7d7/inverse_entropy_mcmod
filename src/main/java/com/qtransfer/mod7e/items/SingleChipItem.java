@@ -1,19 +1,14 @@
 package com.qtransfer.mod7e.items;
 
 import com.qtransfer.mod7e.Utils;
-import com.qtransfer.mod7e.python.PythonCodeExecutor;
 import com.qtransfer.mod7e.python.PythonScript;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
-import org.lwjgl.Sys;
-import org.python.core.PyString;
-import org.python.core.PySystemState;
 import org.python.util.PythonInterpreter;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,13 +23,44 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
     File folder_this=new File(folder_parent,folder_name);
 
     volatile boolean init_ok=false;
-    public volatile PythonScript script=new PythonScript();
+    //public volatile PythonScript script=new PythonScript();
 
-    public static String file_name="main.py"; //TODO 多文件支持
+    public String file_name="main.py"; //当前打开的文件
+
+    public final String file_run_txt="start.txt"; //标记运行主文件
+    public String file_run="main.py"; //运行主文件
+
+    public volatile PythonScript script=new PythonScript();
 
     public SingleChipItem(ItemStack stack){
         this.stack=stack;
         deserializeNBT(stack.getTagCompound());
+        check_init();
+    }
+
+    public void check_init(){
+        //System.out.println(stack+";"+folder_this);
+
+        if(!folder_this.exists()) folder_this.mkdirs();
+
+        File frun=new File(folder_this, file_run_txt);
+        if(!frun.exists()) {
+            try {
+                Utils.writeFile(frun.toString(), "file_main=main.py");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        File fmain=new File(folder_this,file_name);
+        if(!fmain.exists()) {
+            try {
+                fmain.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        writeNBT();
     }
 
     public void writeNBT(){
@@ -53,33 +79,43 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
         if(nbt==null)
             return;
         folder_name=nbt.getString("folder_name");
-
         folder_this=new File(folder_parent,folder_name);
     }
 
     public void initScript(){
-        new Thread(){
+        initScript(null);
+    }
+
+    public void initScript(InitCallBack call_init){
+        try {
+            Properties props = new Properties();
+            FileInputStream in = new FileInputStream(new File(folder_this, file_run_txt));
+            props.load(in);
+            in.close();
+
+            file_run=props.getProperty("file_main","main.py");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        th_run=new Thread(){
             @Override
             public void run() {
                 init_ok=false;
                 PythonInterpreter interpreter = PythonScript.createInterpreter();
                 try {
-                    interpreter.execfile(new File(folder_this,file_name).toString());
+                    interpreter.exec("chip_path='"+folder_this.toString().replace("\\","/")+"'");
+                    if(call_init!=null)
+                        call_init.init(interpreter);
+                    interpreter.execfile(new File(folder_this,file_run).toString());
                 }catch (Throwable e){
                     e.printStackTrace();
                 }
                 script=new PythonScript(interpreter);
                 init_ok=true;
             }
-        }.start();
-        /*PythonCodeExecutor executor= null;
-        try {
-            executor = new PythonCodeExecutor(new File(folder_this,file_name));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        new Thread(executor).run();
-        script=new PythonScript(executor);*/
+        };
+        th_run.start();
     }
 
     public List<String> getAllScripts(){
@@ -99,6 +135,7 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
     }
 
     public void saveToFile(String name, String code){
+        System.out.println("save:"+stack+";"+folder_this);
         if(!folder_this.exists())
             folder_this.mkdirs();
         File tmp=new File(folder_this, file_name);
@@ -117,6 +154,17 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
         }
     }
 
+    public void createFile(String name){
+        File file=new File(folder_this,name);
+        if(!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public Thread th_run;
 
     public void runFuncThread(String name,Object... paras){
@@ -131,6 +179,15 @@ public class SingleChipItem implements INBTSerializable<NBTTagCompound>{
     }
 
     public void stopRunning(){
-        th_run.stop();
+        try {
+            th_run.stop();
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public interface InitCallBack{
+        void init(PythonInterpreter interpreter);
     }
 }

@@ -17,4 +17,9 @@ public class CommonPython {
     public ItemStackPython item(ItemStack stack){
         return new ItemStackPython(stack);
     }
+
+    public int check_meta(String name){
+        int st=name.indexOf(":");
+        return name.indexOf(":",st+1);
+    }
 }

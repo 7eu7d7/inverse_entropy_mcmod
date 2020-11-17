@@ -359,6 +359,8 @@ public class QuantumInterfaceEntity extends QTransTileEntity implements IRequest
         }
 
         //单片机
+        for(SingleChipItem chi:chip_list) chi.stopRunning(); //停止原有线程
+
         chip_list.clear();
         List<ItemStack> single_chip_list=getPlugins("single_chip");
         for(ItemStack stack:single_chip_list){

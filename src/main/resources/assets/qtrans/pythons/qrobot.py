@@ -1,5 +1,5 @@
-import net.minecraft.util.EnumFacing as EnumFacing
-import net.minecraft.util.math.BlockPos as BlockPos
-import com.qtransfer.mod7e.python.PosPython as PosPython
+from net.minecraft.util import EnumFacing
+from net.minecraft.util.math import BlockPos
+from com.qtransfer.mod7e.python import PosPython
 
 print('robot')

@@ -22,6 +22,7 @@ public class ContainerQRobot extends ContainerBase implements ISyncable{
             addSlotToContainer(new SlotItemHandler(this.entity.inventory_storage, i, offx+(i%9) * 18, (i/9) * 18+offy));
         }
 
+
         addPlayerSlot(player,8,97);
 
     }

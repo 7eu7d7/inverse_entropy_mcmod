@@ -31,8 +31,17 @@ public class QRobotPython extends EntityPython {
         entity_robot=(QRobotEntity)entity;
     }
 
+    public ItemStackPython takeItem_StorageAt(int slot,int amount){
+        return new ItemStackPython(entity_robot.inventory_storage.extractItem(slot,amount,false));
+    }
+    public ItemStackPython putItem_StorageAt(int slot,ItemStackPython stack){
+        return new ItemStackPython(entity_robot.inventory_storage.insertItem(slot, stack.stack,false));
+    }
+
     public ItemStackPython takeItem_Storage(String name,int count){
-        ItemStack stack=new ItemStack(Item.getByNameOrId(name),count);
+        int meta=check_meta(name);
+        ItemStack stack=(meta==-1?new ItemStack(Item.getByNameOrId(name),count):
+                new ItemStack(Item.getByNameOrId(name.substring(0,meta)),count,Integer.parseInt(name.substring(meta+1))));
         if(!stack.isEmpty()) {
             return new ItemStackPython(Utils.takeItemStack(entity_robot.inventory_storage, stack, false));
         }else
@@ -62,19 +71,27 @@ public class QRobotPython extends EntityPython {
         if(stack.stack.getItem() instanceof ItemBlock){
             ItemBlock ib= (ItemBlock) stack.stack.getItem();
             Block blk=ib.getBlock();
-            return ib.placeBlockAt(stack.stack,null,world,rbp,null,rbp.getX(),rbp.getY(),rbp.getZ(),blk.getDefaultState());
+            return ib.placeBlockAt(stack.stack,null,world,rbp,null,rbp.getX(),rbp.getY(),rbp.getZ(),blk.getStateFromMeta(stack.getMetadata()));
         }
         return false;
     }
 
-    public boolean moveTo(PosPython pos){ //相对位置
+    public boolean moveTo(PosPython pos){
+        arrive=false;
         pos=processPos(pos);
         if(!det_available(pos))
             return false;
-        arrive=false;
-        entity_robot.moveTo(pos.pos);
+        if(!entity_robot.moveTo(pos.pos)) {
+            System.out.println("cant move to:"+entity_robot.getNavigator().getPathSearchRange());
+            return false;
+        }
         while (!arrive){}
+        arrive=false;
         return true;
+    }
+
+    public void jump(){
+        entity_robot.getJumpHelper().doJump();
     }
 
     public boolean pos_available(PosPython blockPos){
@@ -82,7 +99,15 @@ public class QRobotPython extends EntityPython {
     }
 
     public boolean det_available(PosPython blockPos){
-        return entity.getDistance(blockPos.getX(),blockPos.getY(),blockPos.getZ())<=30;
+        return entity.getDistance(blockPos.getX(),blockPos.getY(),blockPos.getZ())<=entity_robot.det_range;
+    }
+
+    public boolean storageFull(){
+        for(int i=0;i<entity_robot.inventory_storage.getSlots();i++){
+            if(entity_robot.inventory_storage.getStackInSlot(i).isEmpty())
+                return false;
+        }
+        return true;
     }
 
     public void arriveTarget(){
