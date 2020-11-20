@@ -7,13 +7,20 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class StorageItem implements IStorageable {
+    public static HashMap<String, Integer> STORAGE_MAP=new HashMap<String, Integer>(){{
+        put("qtrans:quantum_ball", 1<<13);
+        put("qtrans:high_dim_fragment", 1<<16);
+    }};
+
     public ItemStack stack;
     HashMap<GeneralStack, Integer> items=new HashMap<GeneralStack, Integer>(); //物品1个=1  流体1000ml=1
-    int maxsize;
+    int maxsize=0;
 
     public StorageItem(){
         stack=ItemStack.EMPTY;
@@ -28,15 +35,13 @@ public class StorageItem implements IStorageable {
         String name=stack.getItem().getRegistryName().toString();
         //System.out.println("stname "+name);
         //System.out.println("regname "+stack.getItem().getRegistryName());
-        return name.equals("qtrans:quantum_ball") || name.equals("qtrans:high_dim_fragment");
+        return STORAGE_MAP.containsKey(name);
     }
 
     public void init(){
-        String name=stack.getItem().getRegistryName().toString();
-        if(name.equals("qtrans:quantum_ball")) {
-            maxsize = 1 << 13;
-        }else if(name.equals("qtrans:high_dim_fragment")){
-            maxsize = 1 << 16;
+        if(stack!=null && !stack.isEmpty()) {
+            String name = stack.getItem().getRegistryName().toString();
+            maxsize = STORAGE_MAP.get(name);
         }
     }
 

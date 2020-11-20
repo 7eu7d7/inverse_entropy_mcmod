@@ -1,13 +1,23 @@
 package com.qtransfer.mod7e.items;
 
+import com.qtransfer.mod7e.QuantumTransfer;
+import com.qtransfer.mod7e.gui.GuiElementLoader;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidTank;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class AdvanceCraftPlugin extends CraftPluginItem{
     public ArrayList<String> item_send=new ArrayList<String>();
@@ -60,5 +70,31 @@ public class AdvanceCraftPlugin extends CraftPluginItem{
     public FluidTank addFluidStuff() {
         fluid_send.add("");
         return super.addFluidStuff();
+    }
+
+    public static class Register implements IItemRegister{
+        @Override
+        public Item registItem() {
+            return new Item(){
+                @Override
+                public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+                    if(!worldIn.isRemote) {
+                        playerIn.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_ADVCRAFT_PLUGIN, worldIn, 0, 0, 0);
+                    }
+                    return super.onItemRightClick(worldIn, playerIn, handIn);
+                }
+
+                @Override
+                public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+                    new AdvanceCraftPlugin(stack).writeNBT();
+                }
+
+            };
+        }
+
+        @Override
+        public String getRegistName() {
+            return "adv_craft_plugin";
+        }
     }
 }

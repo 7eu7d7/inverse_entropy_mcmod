@@ -55,59 +55,10 @@ public class ItemMaker {
             }
         }
 
-        addItem(new Item(){
-            @Override
-            public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-                playerIn.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_CRAFT_PLUGIN, worldIn, 0, 0, 0);
-                return super.onItemRightClick(worldIn, playerIn, handIn);
-            }
-
-            @Override
-            public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-                new CraftPluginItem(stack).writeNBT();
-            }
-
-        },"craft_plugin");
-
-        addItem(new Item(){
-            @Override
-            public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-                playerIn.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_ADVCRAFT_PLUGIN, worldIn, 0, 0, 0);
-                return super.onItemRightClick(worldIn, playerIn, handIn);
-            }
-
-            @Override
-            public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-                new AdvanceCraftPlugin(stack).writeNBT();
-            }
-
-        },"adv_craft_plugin");
-
-        addItem(new Item(){
-            @Override
-            public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-                playerIn.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_STORAGE_PLUGIN, worldIn, 0, 0, 0);
-                return super.onItemRightClick(worldIn, playerIn, handIn);
-            }
-
-            @Override
-            public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-                new StoragePluginItem(stack).writeNBT();
-            }
-        },"storage_plugin");
-
-        addItem(new Item(){
-            @Override
-            public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-                playerIn.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_EXTRACT_PLUGIN, worldIn, 0, 0, 0);
-                return super.onItemRightClick(worldIn, playerIn, handIn);
-            }
-
-            @Override
-            public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-                new ExtractPluginItem(stack).writeNBT();
-            }
-        },"extract_plugin");
+        addItem(new CraftPluginItem.Register());
+        addItem(new AdvanceCraftPlugin.Register());
+        addItem(new StoragePluginItem.Register());
+        addItem(new ExtractPluginItem.Register());
 
         addItem(new Item(){
             @Override
@@ -116,55 +67,8 @@ public class ItemMaker {
             }
         },"quantum_ball");
 
-        addItem(new Item(){
-
-            @SideOnly(Side.CLIENT)
-            @Override
-            public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-                QuantumSuperpositionBall qsb=new QuantumSuperpositionBall(stack);
-                if(!stack.hasTagCompound())
-                    qsb.writeNBT();
-                tooltip.add(Utils.getShowNum(qsb.energy.getEnergy())+"/"+Utils.getShowNum(qsb.energy.getCapacity()));
-                NBTTagCompound nbt=stack.getTagCompound();
-                if(nbt.getBoolean("outfe"))
-                    tooltip.add("energy convert upgrade");
-            }
-
-            @Override
-            public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-                return new ICapabilityProvider() {
-                    @Override
-                    public boolean hasCapability(Capability<?> cap, EnumFacing facing) {
-                        NBTTagCompound nbt=stack.getTagCompound();
-                        return cap == CapabilityQEnergy.QENERGY_USER || (cap == CapabilityEnergy.ENERGY && nbt!=null && nbt.getBoolean("outfe"));
-                    }
-                    @Override
-                    public <T> T getCapability(Capability<T> cap, EnumFacing facing) {
-                        NBTTagCompound nbt=stack.getTagCompound();
-                        if (cap == CapabilityQEnergy.QENERGY_USER) {
-                            return CapabilityQEnergy.QENERGY_USER.cast(new QuantumSuperpositionBall(stack).energy);
-                        } else if(cap == CapabilityEnergy.ENERGY && nbt!=null && nbt.getBoolean("outfe")){
-                            return CapabilityEnergy.ENERGY.cast(new QuantumSuperpositionBall(stack).fe_energy);
-                        } else{
-                            return null;
-                        }
-                    }
-                };
-            }
-        },"quantum_superposition_ball");
-
-        addItem(new Item(){
-            @Override
-            public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-                playerIn.openGui(QuantumTransfer.instance, GuiElementLoader.GUI_SINGLE_CHIP, worldIn, 0, 0, 0);
-                return super.onItemRightClick(worldIn, playerIn, handIn);
-            }
-
-            @Override
-            public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-                //new SingleChipItem(stack).writeNBT();
-            }
-        },"single_chip");
+        addItem(new QuantumSuperpositionBall.Register());
+        addItem(new SingleChipItem.Register());
 
         addItem(new Item(){
             @Override
@@ -173,6 +77,8 @@ public class ItemMaker {
                 return super.onItemRightClick(worldIn, playerIn, handIn);
             }
         },"location_getter");
+
+        addItem(new QuantumBagItem.Register());
     }
 
     public static void addItem(Item item,String reg_name){
@@ -180,4 +86,7 @@ public class ItemMaker {
         itemlist.add(item);
     }
 
+    public static void addItem(IItemRegister register){
+        addItem(register.registItem(), register.getRegistName());
+    }
 }

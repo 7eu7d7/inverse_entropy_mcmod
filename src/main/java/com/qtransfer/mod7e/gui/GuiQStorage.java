@@ -76,6 +76,7 @@ public class GuiQStorage extends GUIBase{
 
         //绘制物品
         try {
+            //System.out.println("set_st:"+cqs.st_list.size()+","+this+","+cqs);
             for (int i = item_per_page * page, u = 0; i < page_items; i++, u++) {
                 GeneralStack stack_draw = cqs.st_list.get(i);
                 if (stack_draw.fluid)

@@ -3,7 +3,10 @@ package com.qtransfer.mod7e.gui;
 import com.qtransfer.mod7e.Constant;
 import com.qtransfer.mod7e.QuantumTransfer;
 import com.qtransfer.mod7e.gui.sigchip.GuiSingleChipList;
+import com.qtransfer.mod7e.items.QuantumBagItem;
+import com.qtransfer.mod7e.transfer.IStorageable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,6 +28,8 @@ public class GuiElementLoader implements IGuiHandler
     public static final int GUI_EXTRACT_PLUGIN = 12;
     public static final int GUI_SINGLE_CHIP = 13;
     public static final int GUI_ADVCRAFT_PLUGIN = 14;
+    public static final int GUI_QSTORAGE_ITEM = 15;
+    public static final int GUI_Q_BAG = 16;
 
     public static final int GUI_AIR_IONIZER = 20;
     public static final int GUI_ELECTRON_CONSTRAINTOR = 21;
@@ -82,7 +87,7 @@ public class GuiElementLoader implements IGuiHandler
             case GUI_Q_CHEST:
                 return new ContainerQuantumChest(player, world.getTileEntity(new BlockPos(x, y, z)));
             case GUI_QSTORAGE:
-                return new ContainerQStorage(player, world.getTileEntity(new BlockPos(x, y, z)));
+                return new ContainerQStorage(player, (IStorageable) world.getTileEntity(new BlockPos(x, y, z)));
             case GUI_BLOCK_SHAPER:
                 return new ContainerBlockShaper(player, world.getTileEntity(new BlockPos(x, y, z)));
             case GUI_CRAFT_PLUGIN:
@@ -95,6 +100,10 @@ public class GuiElementLoader implements IGuiHandler
                 return new ContainerExtractPlugin(player);
             case GUI_SINGLE_CHIP:
                 return new ContainerSingleChip(player);
+            case GUI_QSTORAGE_ITEM:
+                return new ContainerQStorage(player, new QuantumBagItem(player.getHeldItem(EnumHand.MAIN_HAND)));
+            case GUI_Q_BAG:
+                return new ContainerQuantumBag(player);
             case GUI_AIR_IONIZER:
                 return new ContainerAirIonizer(player, world.getTileEntity(new BlockPos(x, y, z)));
             case GUI_ELECTRON_CONSTRAINTOR:
@@ -123,7 +132,7 @@ public class GuiElementLoader implements IGuiHandler
             case GUI_Q_CHEST:
                 return new GUIBase(new ContainerQuantumChest(player, world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_QSTORAGE:
-                return new GuiQStorage(new ContainerQStorage(player, world.getTileEntity(new BlockPos(x, y, z))));
+                return new GuiQStorage(new ContainerQStorage(player, (IStorageable) world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_BLOCK_SHAPER:
                 return new GuiBlockShaper(new ContainerBlockShaper(player, world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_CRAFT_PLUGIN:
@@ -136,6 +145,10 @@ public class GuiElementLoader implements IGuiHandler
                 return new GuiExtractPlugin(new ContainerExtractPlugin(player));
             case GUI_SINGLE_CHIP:
                 return new GuiSingleChipList(new ContainerSingleChip(player));
+            case GUI_QSTORAGE_ITEM:
+                return new GuiQStorage(new ContainerQStorage(player, new QuantumBagItem(player.getHeldItem(EnumHand.MAIN_HAND))));
+            case GUI_Q_BAG:
+                return new GUIBase(new ContainerQuantumBag(player));
             case GUI_AIR_IONIZER:
                 return new GuiAirIonizer(new ContainerAirIonizer(player,world.getTileEntity(new BlockPos(x, y, z))));
             case GUI_ELECTRON_CONSTRAINTOR:

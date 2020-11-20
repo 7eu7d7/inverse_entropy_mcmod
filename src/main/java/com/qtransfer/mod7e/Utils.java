@@ -142,17 +142,19 @@ public class Utils {
         int amount=item.getCount();
         ItemStack res=ItemStack.EMPTY;
         for(int i=0;i<handler.getSlots();i++){
-            if(res.isEmpty()) {
-                if(GeneralStack.hashCode(handler.getStackInSlot(i))== GeneralStack.hashCode(item)) {
-                    res = handler.extractItem(i, amount, simulate);
-                    amount -= res.getCount();
-                }
-            } else {
-                if(GeneralStack.hashCode(handler.getStackInSlot(i))== GeneralStack.hashCode(item)) {
-                    ItemStack tmp = handler.extractItem(i, amount, simulate);
-                    res.grow(tmp.getCount());
-                    amount -= tmp.getCount();
-                }
+            ItemStack tmp=null;
+            if(GeneralStack.hashCode(handler.getStackInSlot(i))== GeneralStack.hashCode(item)) {
+                tmp = handler.extractItem(i, amount, simulate);
+            } else if(handler.getStackInSlot(i).hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,null)){
+                ItemStack sub_item=item.copy();
+                sub_item.setCount(amount);
+                tmp=takeItemStack(handler.getStackInSlot(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,null), sub_item, simulate);
+            }
+
+            if(tmp!=null){
+                if(res.isEmpty()) res=tmp;
+                else res.grow(tmp.getCount());
+                amount -= tmp.getCount();
             }
 
             if(amount==0)

@@ -26,15 +26,15 @@ import java.util.Map;
 
 public class ContainerQStorage extends ContainerBase implements ISyncable{
     IStorageable storage;
-    ArrayList<GeneralStack> st_list=new ArrayList<GeneralStack>();
+    public volatile ArrayList<GeneralStack> st_list=new ArrayList<GeneralStack>();
     EntityPlayer player;
     GuiQStorage guist=null;
 
-    public ContainerQStorage(EntityPlayer player, TileEntity tile){
+    public ContainerQStorage(EntityPlayer player, IStorageable storage){
         super();
         this.player=player;
         int offy=30,offx=8;
-        this.storage=(IStorageable) tile;
+        this.storage=storage;
 
         int startx=100-27,starty=6,offset=0;
 
@@ -62,6 +62,7 @@ public class ContainerQStorage extends ContainerBase implements ISyncable{
 
         nbt.setTag("storage", nbtlist);
 
+
         //同步至客户端
         QNetworkManager.INSTANCE.sendPacketToPlayer(new BasePacket("container","storage_list",nbt.toString()) , (EntityPlayerMP) player);
     }
@@ -74,6 +75,7 @@ public class ContainerQStorage extends ContainerBase implements ISyncable{
             for(int i=0;i<nbtlist.tagCount();i++){
                 st_list.add(new GeneralStack(nbtlist.getCompoundTagAt(i)));
             }
+            //System.out.println("set_st:"+st_list.size()+","+guist+","+this);
             if(guist!=null)
                 guist.updateStorage();
         } catch (NBTException e) {

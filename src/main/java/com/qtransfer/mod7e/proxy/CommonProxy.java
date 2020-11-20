@@ -60,8 +60,8 @@ public class CommonProxy
         props.put("python.cachedir", "./jcache"); // again, this option is optional
         PythonInterpreter.initialize(System.getProperties(), props, new String[0]);
 
-		PythonScript.createInterpreter().execfile("./init.py");
-		//PythonScript.createInterpreter().exec(Utils.readAssets("pythons/init.py"));
+		//PythonScript.createInterpreter().execfile("./init.py");
+		PythonScript.createInterpreter().exec(Utils.readAssets("pythons/init.py"));
 
         ArrayList<String> jars=new ArrayList<String>();
         jars.add(Utils.getJarPath(getClass()));

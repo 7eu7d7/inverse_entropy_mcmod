@@ -21,10 +21,16 @@ public class PythonScript {
     }
 
     public static PythonInterpreter createInterpreter(){
+        return createInterpreter(null);
+    }
+    public static PythonInterpreter createInterpreter(String work_dir){
         PySystemState state = new PySystemState();
+        if(work_dir!=null)
+            state.setCurrentWorkingDir(work_dir);
         state.path.append(new PyString(Utils.getJarPath(PythonScript.class)+"/assets/qtrans/pythons"));
         //state.setClassLoader(Thread.currentThread().getContextClassLoader());
         PythonInterpreter pyint=new PythonInterpreter(null,state);
+
         return pyint;
     }
 
